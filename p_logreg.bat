@@ -1,0 +1,1 @@
+python -c "import ic_inspection; ic_inspection.logreg_analysis()"
