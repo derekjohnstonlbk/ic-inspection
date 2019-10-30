@@ -18,7 +18,7 @@ devices = [
 for device_a in devices:
     for device_b in devices:
         scores = []
-        for n in range(1):
+        for n in range(1000):
             print("Performing analysis for " + device_a + " vs. " + device_b + " trial " + str(n+1) + " of 1000.")
             data_a = pd.read_csv("data_rmse/" + device_a + ".csv")
             data_b = pd.read_csv("data_rmse/" + device_b + ".csv")
@@ -32,10 +32,16 @@ for device_a in devices:
             os_data_X, os_data_y = SMOTE().fit_sample(X_train, np.asarray(y_train).ravel())
             os_data_X = pd.DataFrame(data = os_data_X, columns = columns)
             os_data_y = pd.DataFrame(data = os_data_y, columns = ["y"]) 
-            print('Length of oversampled data:', len(os_data_X))
             model = LogisticRegression(solver="liblinear")
             model.fit(os_data_X, np.asarray(os_data_y.values).ravel())
             score = model.score(X_test, y_test)
             scores.append(score)
         
-        print(scores)
+        scores = np.array(scores)
+        mean = np.mean(scores)
+        median = np.median(scores)
+        std = np.std(scores)
+
+        file = open("results/logreg_smote.csv", mode="a", newline="")
+        file.write(device_a + "," + device_b + "," + str(mean) + "," + str(median) + "," + str(std) + "\n")
+        file.close()
