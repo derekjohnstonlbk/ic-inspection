@@ -27,23 +27,27 @@ def logreg(part_number_a, part_number_b):
 
     return model.score(X_test, y_test)
 
-scores = []
+devices = ["lm555cmx", "lmc555im", "lmc555imx", "msp430g2210id", "msp430g2210idr", "msp430g2230id", "msp430g2230idr"]
 
-a = "lmc555im"
-b = "msp430g2230idr"
+for a in devices:
+    for b in devices:
 
-for n in range(1000):
-    print("Performing analysis " + str(n + 1) + " of 1000.")
-    scores.append(logreg(a, b))
+        scores = []
 
-scores = np.array(scores)
-mean = np.mean(scores)
-median = np.median(scores)
-std = np.std(scores)
 
-print("Mean = " + str(mean))
-print("Median = " + str(median))
-print("STD = " + str(std))
+        for n in range(1000):
+            print("Performing analysis " + str(n + 1) + " of 1000.")
+            scores.append(logreg(a, b))
 
-file = open("results/logreg_basic.csv", mode="a", newline="")
-file.write(a + "," + b + "," + str(mean) + "," + str(median) + "," + str(std) + "\n")
+        scores = np.array(scores)
+        mean = np.mean(scores)
+        median = np.median(scores)
+        std = np.std(scores)
+
+        print("Mean = " + str(mean))
+        print("Median = " + str(median))
+        print("STD = " + str(std))
+
+        file = open("results/logreg_basic.csv", mode="a", newline="")
+        file.write(a + "," + b + "," + str(mean) + "," + str(median) + "," + str(std) + "\n")
+        file.close()
