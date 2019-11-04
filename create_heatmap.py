@@ -12,7 +12,7 @@ devices = [
     "msp430g2230idr"
 ]
 
-data = pd.read_csv("results/logreg_basic.csv")
+data = pd.read_csv("results/logreg_synthetic_1000.csv")
 counter = 0
 counter_long = 0
 matrix = []
@@ -36,4 +36,5 @@ print(matrix)
 
 ax = sns.heatmap(matrix, xticklabels=devices, yticklabels=devices, annot=True, cmap="Greys")
 ax.figure.tight_layout()
+plt.title("Logistic Regression Scores for Synthetic S11 (N = 1000).")
 plt.show()
